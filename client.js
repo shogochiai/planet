@@ -1,5 +1,5 @@
 let lotion = require('lotion')
-const YOUR_APP_GCI = '706134c5726690ac6bce2d9a04e716604da9decd8a4237e117cc19ecdb889489'
+const YOUR_APP_GCI = '8823791e79c30a65c3b548e8ebbc198fdf2366706123d7067c53aea0db465012'
 
 let main = async _=>{
 
