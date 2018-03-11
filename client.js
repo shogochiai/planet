@@ -1,5 +1,5 @@
 let lotion = require('lotion')
-const YOUR_APP_GCI = '8823791e79c30a65c3b548e8ebbc198fdf2366706123d7067c53aea0db465012'
+let YOUR_APP_GCI = require('fs').readFileSync('.planet.cgi').toString()
 
 let main = async _=>{
 

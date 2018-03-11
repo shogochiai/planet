@@ -22,6 +22,7 @@ let main = async _=>{
 
 main()
 .then((gci)=>{
+  console.log('GCI: ', gci)
   require('fs').writeFileSync('.planet.cgi', gci)
 })
 .catch(err=>{ console.error(err) })
