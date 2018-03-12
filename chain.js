@@ -1,7 +1,7 @@
 let fs = require('fs')
 let coins = require('coins')
 let lotion = require('lotion')
-let chain_handler_connecter = require('./lib/chain_handler_connecter')
+let chainHandlerConnecter = require('./lib/chain_handler_connecter')
 
 let app = lotion({
   initialState: { /* This is gonna be economic constants for PoS chain or something */ },
@@ -10,7 +10,7 @@ let app = lotion({
 
 app.use(coins({
   name: 'planet',
-  handlers: chain_handler_connecter.getHandlers()
+  handlers: chainHandlerConnecter.getHandlers()
 }))
 
 let main = async _=>{
