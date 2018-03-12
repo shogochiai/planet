@@ -1,7 +1,9 @@
 module.exports = {
   initialState: {
-    judd: 10,
-    matt: 10
+    point: {
+      judd: 10,
+      matt: 10
+    }
   },
   onInput(input, tx, state) {
     console.log('===============')
@@ -11,7 +13,7 @@ module.exports = {
     if(isInsufficientTransfer(input, tx, state)) {
       throw Error('This sender doesn\'t have sufficient balance!')
     }
-    state[input.senderAddress] -= input.amount
+    state.point[input.senderAddress] -= input.amount
     console.log('poststate', state)
     console.log('===============')
   },
@@ -21,14 +23,14 @@ module.exports = {
     console.log('output', output)
     console.log('tx', tx)
     console.log('prestate', state)
-    state[output.receiverAddress] = (state[output.receiverAddress] || 0) + output.amount
+    state.point[output.receiverAddress] = (state.point[output.receiverAddress] || 0) + output.amount
     console.log('poststate', state)
     console.log('===============')
   }
 }
 
 function isInsufficientTransfer(input, tx, state){
-  let isNatBalance = state[input.senderAddress] > 0
-  let isEnough = state[input.senderAddress] >= input.amount
+  let isNatBalance = state.point[input.senderAddress] > 0
+  let isEnough = state.point[input.senderAddress] >= input.amount
   return !(isNatBalance && isEnough)
 }

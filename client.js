@@ -1,30 +1,45 @@
 let lotion = require('lotion')
-let YOUR_APP_GCI = require('fs').readFileSync('.planet.cgi').toString()
+let YOUR_APP_GCI = require('fs').readFileSync('.planet.gci').toString()
 
 let main = async _=>{
-
   let client = await lotion.connect(YOUR_APP_GCI)
-  const OP_TYPE = 'test'
-  // console.log(await client.getState())
-
-  let result = await client.send({
+  let results = []
+  let r1 = await client.send({
     from: [
-      // tx inputs. each must include an amount:
-      { amount: 4, type: OP_TYPE, senderAddress: 'judd' }
+      { amount: 4, type: 'point', senderAddress: 'judd', contract: 'airdrop' }
     ],
     to: [
-      // tx outputs. sum of amounts must equal sum of amounts of inputs.
-      { amount: 4, type: OP_TYPE, receiverAddress: 'matt' }
+      { amount: 4, type: 'point', receiverAddress: 'matt', contract: 'airdrop' }
     ]
   })
-  // console.log(await client.getState())
-  
-  return result
+  results.push(r1)
+
+  let r2 = await client.send({
+    from: [
+      { amount: 1, type: 'certificate', senderAddress: 'matt', contract: 'apply' }
+    ],
+    to: [
+      { amount: 1, type: 'certificate', receiverAddress: 'owen', contract: 'apply' }
+    ]
+  })
+  results.push(r2)
+
+  let r3 = await client.send({
+    from: [
+      { amount: 1, type: 'certificate', senderAddress: 'owen', contract: 'addCertificate' }
+    ],
+    to: [
+      { amount: 1, type: 'certificate', receiverAddress: 'matt', contract: 'addCertificate' }
+    ]
+  })
+  results.push(r3)
+
+  return results
 }
 
 main()
-.then((res)=>{
-  console.log(res.hash, res.check_tx.log)
+.then((results)=>{
+  console.log(results.map(r=>{ return r.check_tx.log }))
   process.exit(0)
  })
 .catch(err=>{

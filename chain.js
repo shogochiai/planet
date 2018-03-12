@@ -1,17 +1,22 @@
 let coins = require('coins')
 let lotion = require('lotion')
-let test_contract = require('./contract/test')
-let mint_contract = require('./contract/mint')
+let point_handler = require('./handlers/point')
+let certificate_handler = require('./handlers/certificate')
 
 let app = lotion({
+  initialState: {
+    // This is gonna be economic constants
+  },
   devMode: true
 })
 
+
+
 app.use(coins({
-  name: 'testcoin',
+  name: 'planet',
   handlers: {
-    test: test_contract,
-    mint: mint_contract
+    point: point_handler,
+    certificate: certificate_handler
   }
 }))
 
@@ -23,6 +28,6 @@ let main = async _=>{
 main()
 .then((gci)=>{
   console.log('GCI: ', gci)
-  require('fs').writeFileSync('.planet.cgi', gci)
+  require('fs').writeFileSync('.planet.gci', gci)
 })
 .catch(err=>{ console.error(err) })
