@@ -6,10 +6,10 @@ let main = async _=>{
   let results = []
   let r1 = await client.send({
     from: [
-      { amount: 4, type: 'point', senderAddress: 'judd', contract: 'airdrop' }
+      { amount: 4, type: 'point', senderAddress: 'judd', contract: 'transfer' }
     ],
     to: [
-      { amount: 4, type: 'point', receiverAddress: 'matt', contract: 'airdrop' }
+      { amount: 4, type: 'point', receiverAddress: 'matt', contract: 'transfer' }
     ]
   })
   results.push(r1)

@@ -1,36 +1,16 @@
+let contracts = require('../contracts/point')
+
 module.exports = {
-  initialState: {
-    point: {
-      judd: 10,
-      matt: 10
-    }
-  },
+  initialState: contracts.initialState,
   onInput(input, tx, state) {
-    console.log('===============')
-    console.log('input', input)
-    console.log('tx', tx)
-    console.log('prestate', state)
-    if(isInsufficientTransfer(input, tx, state)) {
-      throw Error('This sender doesn\'t have sufficient balance!')
-    }
-    state.point[input.senderAddress] -= input.amount
-    console.log('poststate', state)
-    console.log('===============')
+    if(!input.contract) throw Error('A txInput must have a valid type and contract.')
+
+    contracts[input.contract].onInput(input, tx, state)
   },
 
   onOutput(output, tx, state) {
-    console.log('===============')
-    console.log('output', output)
-    console.log('tx', tx)
-    console.log('prestate', state)
-    state.point[output.receiverAddress] = (state.point[output.receiverAddress] || 0) + output.amount
-    console.log('poststate', state)
-    console.log('===============')
-  }
-}
+    if(!output.contract) throw Error('A txOutput must have a valid type and contract.')
 
-function isInsufficientTransfer(input, tx, state){
-  let isNatBalance = state.point[input.senderAddress] > 0
-  let isEnough = state.point[input.senderAddress] >= input.amount
-  return !(isNatBalance && isEnough)
+    contracts[output.contract].onOutput(output, tx, state)
+  }
 }

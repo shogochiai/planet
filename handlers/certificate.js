@@ -1,17 +1,7 @@
 let contracts = require('../contracts/certificate')
 
 module.exports = {
-  initialState: {
-    // Basically substate is closed within contract
-    // Contract coin's tranfer can be within here, but global coin transfer is done by account modules
-    administrators: {
-      owen: {
-        expireBlockHeight: 200000
-      }
-    },
-    users: {
-    }
-  },
+  initialState: contracts.initialState,
   onInput(input, tx, state) {
     if(!input.contract) throw Error('A txInput must have a valid type and contract.')
 

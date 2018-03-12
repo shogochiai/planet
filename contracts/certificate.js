@@ -1,4 +1,15 @@
 module.exports = {
+  initialState: {
+    // Basically substate is closed within contract
+    // Contract coin's tranfer can be within here, but global coin transfer is done by account modules
+    administrators: {
+      owen: {
+        expireBlockHeight: 200000
+      }
+    },
+    users: {
+    }
+  },
   apply: {
     onInput(input, tx, state){
       state.users[input.senderAddress] = {
@@ -14,14 +25,9 @@ module.exports = {
       if(state.administrators[input.senderAddress] == null){
         throw Error('This sender doesn\'t have any right to give certification!')
       }
-
-      
     },
     onOutput(output, tx, state){
-      console.log('===============')
-      console.log('input', output)
-      console.log('tx', tx)
-      console.log('prestate', state)
+      console.log('===============prestate', state)
       if(state.users[output.receiverAddress] && state.users[output.receiverAddress].status !== 'applied'){
         throw Error('Target user did not apply for this cerification.')
       }
@@ -29,8 +35,7 @@ module.exports = {
       state.users[output.receiverAddress].status = 'certified'
       state.users[output.receiverAddress].certifiedBlockHeight = 80001//current
       state.users[output.receiverAddress].expireBlockHeight = 120000// current + Y
-      console.log('poststate', state)
-      console.log('===============')
+      console.log('===============poststate', state)
     }
   },
   removeCertificate: {
