@@ -7,8 +7,7 @@ module.exports = {
   initialState: {
     administrators: {
       owen: {
-        balance: 5,
-        expireBlockHeight: 200000
+        balance: 5
       }
     },
     users: {
@@ -22,8 +21,8 @@ module.exports = {
       onInput(input, tx, state){
         let user = state.users[input.senderAddress]
         user.status = APPLIED
-        user.appliedBlockHeight = 80000//current
-        user.expireBlockHeight = 100000//current+X
+        user.appliedBlockHeight = state.currentHeight//current
+        user.expireBlockHeight = state.currentHeight + 1000//current+X
         
         state.users[input.senderAddress] = user
       },
@@ -45,7 +44,6 @@ module.exports = {
         state.administrators[input.senderAddress] = admin
       },
       onOutput(output, tx, state){
-        console.log('===============prestate', state)
         let user = state.users[output.receiverAddress]
         if(user && user.status !== APPLIED){
           throw Error('Target user is not applying for this cerificate.')
@@ -56,12 +54,11 @@ module.exports = {
 
         user.balance -= 1
         user.status = CERTIFIED
-        user.certifiedBlockHeight = 80001//current
-        user.expireBlockHeight = 120000// current + Y
+        user.certifiedBlockHeight = state.currentHeight//current
+        user.expireBlockHeight = state.currentHeight + 2000// current + Y
         
         // apply state change
         state.users[output.receiverAddress] = user
-        console.log('===============poststate', state)
       }
     },
     removeCertificate: {

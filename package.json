@@ -5,7 +5,8 @@
   "main": "chain.js",
   "scripts": {
     "start": "node chain.js",
-    "test": "node client.js"
+    "test": "node client.js",
+    "check": "curl http://localhost:3000/state"
   },
   "author": "shogochiai",
   "license": "ISC",
