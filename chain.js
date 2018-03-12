@@ -1,26 +1,16 @@
 let fs = require('fs')
-let entities = fs.readdirSync('./contracts').map(name=> name.replace(".js", "") )
-
 let coins = require('coins')
 let lotion = require('lotion')
-
 let chain_handler_connecter = require('./lib/chain_handler_connecter')
 
-let handlers = {}
-entities.map(name=>{
-  handlers[name] = chain_handler_connecter.connect(name)
-})
-
 let app = lotion({
-  initialState: {
-    // This is gonna be economic constants
-  },
-  devMode: true
+  initialState: { /* This is gonna be economic constants for PoS chain or something */ },
+  devMode: true // This config enables to kill chain cache
 })
 
 app.use(coins({
   name: 'planet',
-  handlers: handlers
+  handlers: chain_handler_connecter.getHandlers()
 }))
 
 let main = async _=>{
