@@ -6,30 +6,30 @@ let main = async _=>{
   let results = []
   let r1 = await client.send({
     from: [
-      { amount: 4, type: 'point', senderAddress: 'judd', contract: 'transfer' }
+      { amount: 4, senderAddress: 'judd', type: 'point', action: 'transfer' }
     ],
     to: [
-      { amount: 4, type: 'point', receiverAddress: 'matt', contract: 'transfer' }
+      { amount: 4, receiverAddress: 'matt', type: 'point', action: 'transfer' }
     ]
   })
   results.push(r1)
 
   let r2 = await client.send({
     from: [
-      { amount: 1, type: 'certificate', senderAddress: 'matt', contract: 'apply' }
+      { amount: 1, senderAddress: 'matt', type: 'certificate', action: 'apply' }
     ],
     to: [
-      { amount: 1, type: 'certificate', receiverAddress: 'owen', contract: 'apply' }
+      { amount: 1, receiverAddress: 'owen', type: 'certificate', action: 'apply' }
     ]
   })
   results.push(r2)
 
   let r3 = await client.send({
     from: [
-      { amount: 1, type: 'certificate', senderAddress: 'owen', contract: 'addCertificate' }
+      { amount: 1, senderAddress: 'owen', type: 'certificate', action: 'addCertificate' }
     ],
     to: [
-      { amount: 1, type: 'certificate', receiverAddress: 'matt', contract: 'addCertificate' }
+      { amount: 1, receiverAddress: 'matt', type: 'certificate', action: 'addCertificate' }
     ]
   })
   results.push(r3)

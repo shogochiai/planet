@@ -4,7 +4,7 @@ let entities = fs.readdirSync('./contracts').map(name=> name.replace(".js", "") 
 let coins = require('coins')
 let lotion = require('lotion')
 
-let chain_handler_connecter = require('./chain_handler_connecter')
+let chain_handler_connecter = require('./lib/chain_handler_connecter')
 
 let handlers = {}
 entities.map(name=>{
