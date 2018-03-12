@@ -1,12 +1,13 @@
 {
   "name": "planet",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Easy made plasma on tendermint NodeJS framework, crypto-on-rails.",
+  "main": "chain.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node chain.js",
+    "test": "node client.js"
   },
-  "author": "",
+  "author": "shogochiai",
   "license": "ISC",
   "dependencies": {
     "coins": "^2.2.6",
