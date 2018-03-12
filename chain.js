@@ -1,7 +1,15 @@
+let fs = require('fs')
+let entities = fs.readdirSync('./contracts').map(name=> name.replace(".js", "") )
+
 let coins = require('coins')
 let lotion = require('lotion')
-let point_handler = require('./handlers/point')
-let certificate_handler = require('./handlers/certificate')
+
+let chain_handler_connecter = require('./chain_handler_connecter')
+
+let handlers = {}
+entities.map(name=>{
+  handlers[name] = chain_handler_connecter.connect(name)
+})
 
 let app = lotion({
   initialState: {
@@ -10,14 +18,9 @@ let app = lotion({
   devMode: true
 })
 
-
-
 app.use(coins({
   name: 'planet',
-  handlers: {
-    point: point_handler,
-    certificate: certificate_handler
-  }
+  handlers: handlers
 }))
 
 let main = async _=>{
@@ -28,6 +31,6 @@ let main = async _=>{
 main()
 .then((gci)=>{
   console.log('GCI: ', gci)
-  require('fs').writeFileSync('.planet.gci', gci)
+  fs.writeFileSync('.planet.gci', gci)
 })
 .catch(err=>{ console.error(err) })
